@@ -1,4 +1,4 @@
-var util
+var util = {}
 // Debounce Method
 // ---------------
 /*

@@ -10,8 +10,39 @@ let app = new Vue({
 		loadingResult: false,
 		error: false
 	},
-	computed: {
-		
+	watch: {
+		subKeyword: util.debounce(async function subKeywordHandler()
+		{
+			this.clearResult()
+			if(this.vidLinkInput != '') {
+				fetch('https://yt-title-find.000webhostapp.com/?url=' + encodeURIComponent(this.vidLinkInput))
+					.then(response => response.json())
+					.then(data => {
+						this.vidDesc = data
+						console.log(data)
+					})
+					.catch((error) => {
+						console.error('Error:', error);
+						this.error = true
+					})
+				this.vidLink = this.vidLinkInput
+				if(this.vidLink.length > 0 && this.subKeyword.length >= 3) {
+					fetch('https://cari-teks-video-api.vercel.app/api/search?url=' + encodeURIComponent(this.vidLink) + '&q=' + this.subKeyword)
+						.then(response => response.json())
+						.then(data => {
+							console.log(data)
+							this.foundList.push(data)
+							if(data.total > 0) 
+								this.flattenResult(data)
+						})
+						.catch((error) => {
+							console.error('Error:', error);
+							this.error = true
+						})
+				}
+			}
+		}
+		,250)
 	},
 	methods: {
 		clearKeyword(event)
@@ -71,7 +102,6 @@ let app = new Vue({
 		},
 		searchSubAndVidDesc()
 		{
-			// this.loadingResult = true
 			fetch('https://yt-title-find.000webhostapp.com/?url=' + encodeURIComponent(this.vidLinkInput))
 				.then(response => response.json())
 				.then(data => {
@@ -101,7 +131,8 @@ let app = new Vue({
 		resetToTitleOrURL(event)
 		{
 			if(this.vidDesc != '') event.target.value = this.vidDesc.title
-			else event.target.value = this.vidLink
+			else if(this.vidLink != '') event.target.value = this.vidLink
+			else event.target.value = this.vidLinkInput
 		}
 	}
 })

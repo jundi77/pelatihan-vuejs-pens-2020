@@ -39,6 +39,7 @@
 			<p v-else-if="vidLinkInput == ''">Link video belum diisi.</p>
 			<p v-else-if="subKeyword.length < 3">Keyword minimal 3 huruf.</p>
 			<p v-else-if="error == true">Terjadi kesalahan. <a href="#">Coba lagi?</a></p>
+			<p v-else-if="foundListFlattened.length == 0 && foundList.length == 0">Loading...</p>
 			<ul v-if="foundListFlattened.length > 0">
 				<!-- v-if found -->
 				<li
@@ -48,7 +49,12 @@
 			</ul>
 			<p
 			v-observe-visibility="loadingResultVisible" 
-			v-if="loadingResult || (foundList.length > 0 && foundList[foundList.length-1].hasOwnProperty('next') && foundList[foundList.length-1].next != null)"
+			v-if="loadingResult || 
+			(foundList.length > 0 && 
+			foundList[foundList.length-1].hasOwnProperty('data') && 
+			foundList[foundList.length-1].data != null && 
+			foundList[foundList.length-1].data.hasOwnProperty('next') && 
+			foundList[foundList.length-1].data.next != null)"
 			>Loading...</p>
 			<!--Seen, sesuaikan warna di https://loading.io/--> 
 		</div>

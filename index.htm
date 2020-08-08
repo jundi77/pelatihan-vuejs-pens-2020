@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title></title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<title>test</title>
 </head>
 <body>
-  
-  <script src="js/vue.js"></script>
-  <script src="js/util.js"></script>
-  <script src="js/main.js"></script>
+	<div id="loading-page">
+		<img id="loading-page-image" src="img/loading.gif" alt="Loading..." />
+		<script>
+			$(window).on('load', function () {
+				$('#loading-page').hide();
+			});
+		</script>
+	</div>
+	<!-- layouting -->
+	<!-- header -->
+	<div id="app">
+		<label for="sub-keyword">
+			<h2>Pencarian untuk subtitle dengan </h2>
+			<label for="vid-link" v-if="vidDesc != ''"><h2>judul video: </h2></label>
+			<label for="vid-link" v-else><h2>link video: </h2></label>
+			<input type="text" name="vid-link" id="vid-link" v-model="vidLinkInput" @focus="setToVidLinkInput" @blur="resetVidLinkInput">
+			<button @click='clearAll'>bersihkan</button>
+		</label>
+		<label for="sub-keyword">Keyword</label>
+		<input type="text" name="sub-keyword" id="sub-keyword" ref="subKeyword" v-model="subKeyword" @input="clearResult">
+		<button @click='clearKeyword'>bersihkan</button>
+		<button @click='searchSubAndVidDesc'>cari</button>
+		<h2 v-if="foundList.length > 0">{{ (foundList[0].hasOwnProperty('total'))? foundList[0].total : 0}} kecocokan ditemukan untuk <span><label for="vid-link"></label>{{ (vidDesc != '')? 'video ' : 'link ' }}</span></h2>
+		<div>
+			<p v-if="subKeyword.length == 0">Menunggu inputmu...</p>
+			<p v-else-if="subKeyword.length < 3">Keyword minimal 3 huruf.</p>
+			<p v-else-if="error == true">Terjadi kesalahan.</p>
+			<ul v-if="foundList.length > 0 && foundList[0].total > 0">
+				<!-- v-if found -->
+				<tmp v-for="(found, index) in foundList" :key="index">
+					<li
+					v-for="(result, index_result) in found"
+					:key="index_result"
+					>{{ found.data['0'].text }}</li>
+				<tmp />
+			</ul>
+			<img src="img/loading-result.gif" alt="Loading..." v-observe-visibility="loadingResultVisible" 
+			v-if="loadingResult || (foundList.length > 0 && foundList[foundList.length-1].hasOwnProperty('next') && foundList[foundList.length-1].next != null)"
+			/>
+			<!--Seen, sesuaikan warna di https://loading.io/--> 
+		</div>
+		<!-- v-else-if error not found -->
+		<!-- go to top btn -->
+		<!-- result -->
+
+	</div>
+	<script src="js/vue.js"></script>
+	<script src="js/util.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>

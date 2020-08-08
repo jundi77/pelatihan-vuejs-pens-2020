@@ -24,10 +24,9 @@
 	<!-- header -->
 	<div id="app">
 		<label for="sub-keyword">
-			<h2>Pencarian untuk subtitle dengan </h2>
-			<label for="vid-link" v-if="vidDesc != ''"><h2>judul video: </h2></label>
-			<label for="vid-link" v-else><h2>link video: </h2></label>
-			<input type="text" name="vid-link" id="vid-link" v-model="vidLinkInput" @focus="setToVidLinkInput" @blur="resetVidLinkInput">
+			<h2>Pencarian untuk subtitle dari </h2>
+			<label for="vid-link"><h2>video: </h2></label>
+			<input type="text" name="vid-link" id="vid-link" v-model="vidLinkInput" @focus="setToVidLinkInput" @blur="resetToTitleOrURL">
 			<button @click='clearAll'>bersihkan</button>
 		</label>
 		<label for="sub-keyword">Keyword</label>
@@ -37,20 +36,20 @@
 		<h2 v-if="foundList.length > 0">{{ (foundList[0].hasOwnProperty('total'))? foundList[0].total : 0}} kecocokan ditemukan untuk <span><label for="vid-link"></label>{{ (vidDesc != '')? 'video ' : 'link ' }}</span></h2>
 		<div>
 			<p v-if="subKeyword.length == 0">Menunggu inputmu...</p>
+			<p v-else-if="vidLinkInput == ''">Link video belum diisi.</p>
 			<p v-else-if="subKeyword.length < 3">Keyword minimal 3 huruf.</p>
-			<p v-else-if="error == true">Terjadi kesalahan.</p>
-			<ul v-if="foundList.length > 0 && foundList[0].total > 0">
+			<p v-else-if="error == true">Terjadi kesalahan. <a href="#">Coba lagi?</a></p>
+			<ul v-if="foundListFlattened.length > 0">
 				<!-- v-if found -->
-				<tmp v-for="(found, index) in foundList" :key="index">
-					<li
-					v-for="(result, index_result) in found"
-					:key="index_result"
-					>{{ found.data['0'].text }}</li>
-				<tmp />
+				<li
+				v-for="(result, index_result) in foundListFlattened"
+				:key="index_result"
+				>{{ result.text }}</li>
 			</ul>
-			<img src="img/loading-result.gif" alt="Loading..." v-observe-visibility="loadingResultVisible" 
+			<p
+			v-observe-visibility="loadingResultVisible" 
 			v-if="loadingResult || (foundList.length > 0 && foundList[foundList.length-1].hasOwnProperty('next') && foundList[foundList.length-1].next != null)"
-			/>
+			>Loading...</p>
 			<!--Seen, sesuaikan warna di https://loading.io/--> 
 		</div>
 		<!-- v-else-if error not found -->

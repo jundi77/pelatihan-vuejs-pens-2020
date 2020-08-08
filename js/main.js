@@ -6,26 +6,33 @@ let app = new Vue({
 		vidDesc: '',
 		subKeyword: '',
 		foundList: [],
+		foundListFlattened: [],
 		loadingResult: false,
 		error: false
+	},
+	computed: {
+		
 	},
 	methods: {
 		clearKeyword(event)
 		{
 			this.subKeyword = ''
+			this.clearResult()
 		},
 		clearResult()
 		{
 			this.error = false
+			this.loadingResult = false
 			this.foundList = []
+			this.foundListFlattened = []
 		},
 		clearAll(event)
 		{
+			this.clearKeyword()
+			this.clearResult()
 			this.vidLink = ''
 			this.vidLinkInput = ''
 			this.vidDesc = ''
-			this.subKeyword = ''
-			this.foundList = []
 			this.$refs.subKeyword.value = ''
 		},
 		loadingResultVisible(isVisible, entry)
@@ -43,6 +50,8 @@ let app = new Vue({
 					.then(data => {
 						console.log(data)
 						this.foundList.push(data)
+						if(data.total > 0) 
+							this.flattenResult(data)
 					})
 					.then(() => {
 						if(this.loadingResult) this.loadResult()
@@ -52,6 +61,13 @@ let app = new Vue({
 						this.error = true
 					})
 			}
+		},
+		flattenResult(target)
+		{
+			for (a of target.data) {
+				this.foundListFlattened.push(a)
+			}
+
 		},
 		searchSubAndVidDesc()
 		{
@@ -69,6 +85,8 @@ let app = new Vue({
 					.then(data => {
 						console.log(data)
 						this.foundList.push(data)
+						if(data.total > 0) 
+							this.flattenResult(data)
 					})
 					.catch((error) => {
 						console.error('Error:', error);
@@ -76,17 +94,14 @@ let app = new Vue({
 					})
 			}
 		},
-		setToVidLink()
+		setToVidLinkInput(event)
 		{
-			this.target
+			event.target.value = this.vidLinkInput
 		},
-		setToVidLinkInput()
+		resetToTitleOrURL(event)
 		{
-
-		},
-		resetVidLinkInput()
-		{
-
+			if(this.vidDesc != '') event.target.value = this.vidDesc.title
+			else event.target.value = this.vidLink
 		}
 	}
 })

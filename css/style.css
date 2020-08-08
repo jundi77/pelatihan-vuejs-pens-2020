@@ -1,5 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Quantico&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Chivo:300,300i,400,400i,700,700i,900,900i|Saira+Extra+Condensed:100,200,300,400,500,600,700,800|Saira:100,200,300,400,500,600,700,800');
+* {
+    scroll-behavior: smooth;
+}
 body {
-    background-color: grey;
+    color: white;
+    caret-color: red;
+    transition: all 0.2s;
+    background-color: black;
 }
 #loading-page {
     width: 100%;
@@ -11,8 +19,7 @@ body {
     background-color: black;
     z-index: 99;
     text-align: center;
-  }
-  
+}
 #loading-page-image {
     position: absolute;
     top: 25vh;
@@ -20,3 +27,171 @@ body {
     text-align: center;
     z-index: 100;
 }
+#app {
+    margin: 50px auto;
+}
+#vid-link {
+	background-color: cyan;
+	border: 0;
+}
+#vid-link::placeholder {
+    color: rgba(0,0,0,0.5);
+}
+#sub-keyword {
+    color: white;
+	border: 0;
+	border-bottom: 7px solid grey;
+	background-color: rgba(0,0,0,0.0);
+}
+.sub-keyword-label {
+    width: 100%;
+}
+.sub-keyword-label h2 {
+    font-family: 'Quantico', sans-serif;
+    font-size: 1rem;
+}
+.sub-keyword-label input{
+    max-width: 50rem;
+}
+input#sub-keyword {
+    font-size: 7vh;
+}
+
+/* timeline */
+ body {
+	 background: #252827;
+	 font-size: 16px;
+}
+ p {
+	 font-weight: 300;
+}
+ a {
+	 color: #6c6d6d;
+	 text-decoration: none;
+	 text-transform: uppercase;
+	 display: block;
+	 letter-spacing: .3em;
+	 font-size: .6em;
+	 font-weight: 400;
+	 background: #252727;
+	 padding: .3rem 1rem;
+	 margin: 1.9rem 0 0 0;
+	 float: right;
+}
+ a:hover {
+	 color: white;
+	 background: #004ffc;
+	 border-bottom: .35em solid black;
+}
+ strong {
+	 font-weight: 600;
+}
+ h3 {
+	 font-family: 'Saira', sans-serif;
+	 letter-spacing: 1.5px;
+	 color: white;
+	 font-weight: 400;
+	 font-size: 2.4em;
+}
+ #timeline-content {
+	 margin-top: 50px;
+	 text-align: center;
+}
+ .timeline {
+	 border-left: 4px solid #0ffc;
+	 border-bottom-right-radius: 4px;
+	 border-top-right-radius: 4px;
+	 background: rgba(255,255,255,0.03);
+	 color: rgba(255,255,255,0.8);
+	 font-family: 'Chivo', sans-serif;
+	 margin: 50px auto;
+	 letter-spacing: 0.5px;
+	 position: relative;
+	 line-height: 1.4em;
+	 font-size: 1.03em;
+	 padding: 50px;
+	 list-style: none;
+	 text-align: left;
+	 font-weight: 100;
+	 max-width: 30%;
+}
+ .timeline h1 {
+	 font-family: 'Saira', sans-serif;
+	 letter-spacing: 1.5px;
+	 font-weight: 100;
+	 font-size: 1.4em;
+}
+ .timeline h2, .timeline h3 {
+	 font-family: 'Saira', sans-serif;
+	 letter-spacing: 1.5px;
+	 font-weight: 400;
+	 font-size: 1.4em;
+}
+ .timeline .event {
+	 border-bottom: 1px dashed rgba(255,255,255,0.1);
+	 padding-bottom: 25px;
+	 margin-bottom: 50px;
+	 position: relative;
+}
+ .timeline .event:last-of-type {
+	 padding-bottom: 0;
+	 margin-bottom: 0;
+	 border: none;
+}
+ .timeline .event:before, .timeline .event:after {
+	 position: absolute;
+	 display: block;
+	 top: 0;
+}
+ .timeline .event:before {
+	 left: -217.5px;
+	 color: rgba(255,255,255,0.4);
+	 content: attr(data-date);
+	 text-align: right;
+	 font-weight: 100;
+	 font-size: 0.9em;
+	 min-width: 120px;
+	 font-family: 'Saira', sans-serif;
+}
+ .timeline .event:after {
+	 box-shadow: 0 0 0 4px #004ffc;
+	 left: -57.85px;
+	 background: #313534;
+	 border-radius: 50%;
+	 height: 11px;
+	 width: 11px;
+	 content: "";
+	 top: 5px;
+}
+/* button */
+button.clear {
+    border: 0;
+    border-bottom: 7px solid grey;
+    color: white;
+    font-size: 7vh;
+    background-color: rgba(0,0,0,0.0);
+    transition: all 0.3s;
+} 
+button.clear:hover {
+    font-size: 6vh;
+    transition: all 0.3s;
+}
+#myBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: cyan; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 18px; /* Increase font size */
+  }
+  
+  #myBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+  }

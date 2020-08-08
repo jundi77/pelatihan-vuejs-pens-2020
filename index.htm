@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="css/style.css">
-<title>test</title>
+<title>Frontend cari-teks-video-api.vercel.app</title>
 </head>
 <body>
 	<div id="loading-page">
@@ -20,47 +20,87 @@
 			});
 		</script>
 	</div>
+	<button onclick="topFunction()" id="myBtn" title="Go to top">&uarr;</button>
+	<script>
+		//Get the button:
+		mybutton = document.getElementById("myBtn");
+
+		// When the user scrolls down 20px from the top of the document, show the button
+		window.onscroll = function() {scrollFunction()};
+
+		function scrollFunction() {
+		  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+		    mybutton.style.display = "block";
+		  } else {
+		    mybutton.style.display = "none";
+		  }
+		}
+
+		// When the user clicks on the button, scroll to the top of the document
+		function topFunction() {
+		  document.body.scrollTop = 0; // For Safari
+		  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+		} 
+	</script>
 	<!-- layouting -->
 	<!-- header -->
-	<div id="app">
-		<label for="sub-keyword">
-			<h2>Pencarian untuk subtitle dari </h2>
-			<label for="vid-link"><h2>video: </h2></label>
-			<input type="text" name="vid-link" id="vid-link" v-model="vidLinkInput" kulprit @focus="setToVidLinkInput" @blur="resetToTitleOrURL">
-			<button @click='clearAll'>bersihkan</button>
+	<div id="app" class="container">
+		<label for="sub-keyword" class="sub-keyword-label text-uppercase">
+			<h2>Pencarian untuk subtitle dari 
+				<label for="vid-link">
+					<h2>video: </h2>
+				</label>
+				<div class="input-group">
+					<input type="text" 
+					name="vid-link" 
+					id="vid-link" 
+					v-model="vidLinkInput" 
+					@focus="setToVidLink" 
+					@blur="resetToTitleOrURL"
+					class="form-control"
+					placeholder="Masukkan link video...">
+				</div>
+			</h2>
 		</label>
-		<label for="sub-keyword">Keyword</label>
-		<input type="text" name="sub-keyword" id="sub-keyword" ref="subKeyword" v-model="subKeyword" @input="clearResult">
-		<button @click='clearKeyword'>bersihkan</button>
-		<button @click='searchSubAndVidDesc'>cari</button>
-		<h2 v-if="foundList.length > 0">{{ (foundList[0].hasOwnProperty('total'))? foundList[0].total : 0}} kecocokan ditemukan untuk <span><label for="vid-link"></label>{{ (vidDesc != '')? 'video ' : 'link ' }}</span></h2>
+		<br>
+		<div class="input-group">
+			<input type="text" name="sub-keyword" id="sub-keyword" ref="subKeyword" v-model="subKeyword" @input="clearResult" class="form-control"
+			placeholder="Masukkan link video...">
+			<div class="input-group-append">
+				<button @click='clearKeyword' class='clear'>x</button>
+			</div>
+		</div>
 		<div>
-			<p v-if="subKeyword.length == 0">Menunggu inputmu...</p>
-			<p v-else-if="vidLinkInput == ''">Link video belum diisi.</p>
-			<p v-else-if="subKeyword.length < 3">Keyword minimal 3 huruf.</p>
-			<p v-else-if="error == true">Terjadi kesalahan. <a href="#">Coba lagi?</a></p>
-			<p v-else-if="foundListFlattened.length == 0 && foundList.length == 0">Loading...</p>
-			<ul v-if="foundListFlattened.length > 0">
-				<!-- v-if found -->
-				<li
-				v-for="(result, index_result) in foundListFlattened"
-				:key="index_result"
-				>{{ result.text }}</li>
-			</ul>
+			<div id="timeline-content">
+				<h3 v-if="subKeyword.length == 0"></h3>
+				<h3 v-else-if="vidLinkInput == ''">Link video belum diisi.</h3>
+				<h3 v-else-if="subKeyword.length < 3">Keyword minimal 3 huruf.</h3>
+				<h3 v-else-if="error == true">Terjadi kesalahan. <a href="#">Coba lagi?</a></h3>
+				<h3 v-else-if="foundListFlattened.length == 0 && foundList.length == 0">Loading...</h3>	
+				<h3 v-else-if="foundList.length > 0">{{ (foundList[0].hasOwnProperty('total'))? foundList[0].total : 0}} kecocokan ditemukan</h3>
+			      
+				<ul class="timeline" v-if="foundListFlattened.length > 0">
+					<!-- v-if found -->
+					<li
+					v-for="(result, index_result) in foundListFlattened"
+					:key="index_result"
+					class="event"
+					:data-date="convertSecond(result.start) + ' -&gt; ' + convertSecond(result.end)"
+					v-html="result.text"
+					><a href="#">aa</a></li>
+				</ul>
+			      </div>
 			<p
 			v-observe-visibility="loadingResultVisible" 
 			v-if="loadingResult || 
 			(foundList.length > 0 && 
 			foundList[foundList.length-1].hasOwnProperty('data') && 
 			foundList[foundList.length-1].data != null && 
-			foundList[foundList.length-1].data.hasOwnProperty('next') && 
-			foundList[foundList.length-1].data.next != null)"
+			foundList[foundList.length-1].hasOwnProperty('next') && 
+			foundList[foundList.length-1].next != null)"
+			class="text-center"
 			>Loading...</p>
-			<!--Seen, sesuaikan warna di https://loading.io/--> 
 		</div>
-		<!-- v-else-if error not found -->
-		<!-- go to top btn -->
-		<!-- result -->
 
 	</div>
 	<script src="js/vue.js"></script>

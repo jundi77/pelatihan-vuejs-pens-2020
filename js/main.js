@@ -14,6 +14,13 @@ let app = new Vue({
 		subKeyword: util.debounce(async function subKeywordHandler()
 		{
 			this.clearResult()
+			if(this.vidLinkInput == this.vidDesc.title) {
+				this.vidLinkInput = this.vidLink
+			}
+			if(this.vidLink != this.vidLinkInput) {
+				this.vidDesc = ''
+			}
+			this.vidLink = this.vidLinkInput
 			if(this.vidLinkInput != '') {
 				fetch('https://yt-title-find.000webhostapp.com/?url=' + encodeURIComponent(this.vidLinkInput))
 					.then(response => response.json())
@@ -21,13 +28,16 @@ let app = new Vue({
 						this.vidDesc = data
 						console.log(data)
 					})
+					.then(() => {
+						if(this.vidDesc.title != undefined)
+							this.vidLinkInput = this.vidDesc.title
+					})
 					.catch((error) => {
 						console.error('Error:', error);
 						this.error = true
 					})
-				this.vidLink = this.vidLinkInput
 				if(this.vidLink.length > 0 && this.subKeyword.length >= 3) {
-					fetch('https://cari-teks-video-api.vercel.app/api/search?url=' + encodeURIComponent(this.vidLink) + '&q=' + this.subKeyword)
+					fetch('https://cari-teks-video-api.vercel.app/api/search?url=' + encodeURIComponent(this.vidLinkInput) + '&q=' + this.subKeyword)
 						.then(response => response.json())
 						.then(data => {
 							console.log(data)
@@ -124,15 +134,24 @@ let app = new Vue({
 					})
 			}
 		},
-		setToVidLinkInput(event)
+		setToVidLink(event)
 		{
-			event.target.value = this.vidLinkInput
+			console.log([this.vidDesc.title, this.vidLink, this.vidLinkInput])
+			event.target.value = this.vidLink
 		},
 		resetToTitleOrURL(event)
 		{
+			console.log([this.vidDesc.title, this.vidLink, this.vidLinkInput])
 			if(this.vidDesc != '') event.target.value = this.vidDesc.title
 			else if(this.vidLink != '') event.target.value = this.vidLink
 			else event.target.value = this.vidLinkInput
+		},
+		convertSecond (totalSeconds){
+			let hour = Math.floor(totalSeconds/3600)
+			totalSeconds %= 3600
+			let minute = Math.floor(totalSeconds/60)
+			let seconds = totalSeconds % 60
+			return '' + ((hour > 0)? hour + 'J:' : '') + ((minute > 0)? minute + 'M:' : '') + seconds + 'D'
 		}
 	}
 })

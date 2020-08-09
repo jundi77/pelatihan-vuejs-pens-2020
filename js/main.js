@@ -110,7 +110,7 @@ let app = new Vue({
 		{
 			let tmp = this.subKeyword
 			this.subKeyword = ''
-			this.subKeyword = tmp
+                        setTimeout( () => {this.subKeyword = tmp}, 300)
 		},
 		setToVidLink(event)
 		{

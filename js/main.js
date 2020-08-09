@@ -106,6 +106,12 @@ let app = new Vue({
 			}
 
 		},
+		tryAgain()
+		{
+			let tmp = this.subKeyword
+			this.subKeyword = ''
+			this.subKeyword = tmp
+		},
 		setToVidLink(event)
 		{
 			event.target.value = this.vidLink

@@ -75,7 +75,7 @@
 				<h3 v-if="subKeyword.length == 0"></h3>
 				<h3 v-else-if="vidLinkInput == ''">Link video belum diisi.</h3>
 				<h3 v-else-if="subKeyword.length < 3">Keyword minimal 3 huruf.</h3>
-				<h3 v-else-if="error == true">Terjadi kesalahan. <a href="#">Coba lagi?</a></h3>
+				<h3 v-else-if="error == true">Terjadi kesalahan. <a href="#" @click='tryAgain'>Coba lagi?</a></h3>
 				<h3 v-else-if="foundListFlattened.length == 0 && foundList.length == 0">Loading...</h3>	
 				<h3 v-else-if="foundList.length > 0">{{ (foundList[0].hasOwnProperty('total'))? foundList[0].total : 0}} kecocokan ditemukan</h3>
 			      

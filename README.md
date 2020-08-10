@@ -5,9 +5,7 @@ Untuk menggunakan web, clone repo <a href="https://github.com/jundi77/pelatihan-
 Anda juga dapat langsung mengunjungi <a href="https://pelatihan-vuejs-pens-2020.vercel.app" norel noopener>web ini</a>.
 <br>
 <br>
-<hr>
 <h2>Fitur</h2>
-<hr>
 <p align="center"><img src="https://i.ibb.co/Y7dR39t/ss-web.png" alt="ss-web" border="0"></p>
 Web ini dapat mencari keyword di subtitle bahasa Inggris video youtube. Masukkan link video youtube ke form input berwarna biru, dan keyword ke form input besar di bawah form input biru.<br>
 
